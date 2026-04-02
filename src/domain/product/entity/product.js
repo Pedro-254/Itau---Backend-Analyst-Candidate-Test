@@ -4,7 +4,7 @@ class Product {
         this._title = title;
         this._price = price;
         this._description = description;
-        this._category = category;
+        this._category = category; //ID da categoria
         this._ownerID = ownerID;
     }
 

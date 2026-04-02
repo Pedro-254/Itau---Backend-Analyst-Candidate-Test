@@ -23,3 +23,6 @@ mongoose
 //Rotas
 const productRoutes = require("./infra/api/routes/product.routes");
 app.use('/products', productRoutes);
+
+const categoryRoutes = require("./infra/api/routes/category.routes")
+app.use('/category', categoryRoutes)
