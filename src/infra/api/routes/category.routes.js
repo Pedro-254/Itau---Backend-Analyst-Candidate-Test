@@ -7,6 +7,7 @@ const Category = require("../../database/schemas/category.schema")
 router.post('/create', async (req,res) => {
     try {
         const body = req.body
+        
 
         // criar a categoria
 
@@ -14,3 +15,5 @@ router.post('/create', async (req,res) => {
         
     }
 })
+
+module.exports = router;

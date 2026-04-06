@@ -4,25 +4,30 @@ const router = express.Router();
 
 const Product = require("../../database/schemas/product.schema")
 
+const CreateProductUseCase = require("../../../application/product/createProduct")
+const FindProductUseCase = require("../../../application/product/findProducts")
+const ProductRepositoryMongo = require("../../database/repository/product.repository")
+
+const productRepository = new ProductRepositoryMongo();
+const createProductUseCase = new CreateProductUseCase(productRepository);
+const fincdProductUseCase = new FindProductUseCase();
+
+
 // POST /products  
 router.post('/create', async (req, res) => {
-  try{
-    const doc = await Product.create(req.body);
-    res.status(201).json(doc);
-  } catch (err){
-    console.log(err)
+  try {
+    const result = await createProductUseCase.execute(req.body);
+    return res.status(201).json(result);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
   }
 });
 
 // GET /products  
 router.get('/', async (req, res) => {
-  const ownerID = req.query.ownerID
+  const {ownerID, page, limit} = req.query;
   try{
-    if (!ownerID) {
-      return res.status(400).json({message: 'ownerID é obrigatório'})
-    }
-
-    const docs = await Product.find({ownerID})
+    const result = await
     res.status(200).json(docs)
 
   } catch (err){
