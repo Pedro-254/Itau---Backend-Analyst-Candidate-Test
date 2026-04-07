@@ -7,7 +7,6 @@ class CreateProductUseCase {
   }
 
   async execute(input) {
-    // domínio
     const product = new Product({
       id: undefined,
       title: input.title,
@@ -17,9 +16,8 @@ class CreateProductUseCase {
       ownerID: input.ownerID,
     });
 
-    // persistência via repository
-    const saved = await this.productRepository.save(product);
-    return saved;
+    const response = await this.productRepository.save(product);
+    return response;
   }
 }
 

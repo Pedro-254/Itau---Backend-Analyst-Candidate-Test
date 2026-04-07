@@ -48,9 +48,7 @@ class ProductRepositoryMongo {
           page: safePage,
           limit: safeLimit,
           total,
-          totalPages: Math.ceil(total / safeLimit),
-          hasNext: safePage * safeLimit < total,
-          hasPrev: safePage > 1,
+          totalPages: Math.ceil(total / safeLimit)
         },
       };
 

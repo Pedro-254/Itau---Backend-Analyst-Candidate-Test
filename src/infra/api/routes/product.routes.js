@@ -10,7 +10,7 @@ const ProductRepositoryMongo = require("../../database/repository/product.reposi
 
 const productRepository = new ProductRepositoryMongo();
 const createProductUseCase = new CreateProductUseCase(productRepository);
-const fincdProductUseCase = new FindProductUseCase();
+const findProductUseCase = new FindProductUseCase(productRepository);
 
 
 // POST /products  
@@ -25,10 +25,9 @@ router.post('/create', async (req, res) => {
 
 // GET /products  
 router.get('/', async (req, res) => {
-  const {ownerID, page, limit} = req.query;
   try{
-    const result = await
-    res.status(200).json(docs)
+    const result = await findProductUseCase.execute(req.query)
+    res.status(200).json(result)
 
   } catch (err){
     console.log(err)
