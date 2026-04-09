@@ -24,7 +24,7 @@ class Category {
 function validate(title, description, ownerID) {
     const titleValidated = typeof title === 'string' ? title.trim() : '';
     const descriptionValidated = typeof description === 'string' ? description.trim() : '';
-    const ownerIDValidated = typeof ownerID === 'string' ? title.trim() : '';
+    const ownerIDValidated = typeof ownerID === 'string' ? ownerID.trim() : '';
 
     if (!titleValidated) {
       throw new Error('title é obrigatório');

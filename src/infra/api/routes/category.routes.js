@@ -12,7 +12,7 @@ const createCategoryUseCase = new CreateCategoryUseCase(categoryRepositoryMongo)
 router.post('/create', async (req,res) => {
     try {
         const body = req.body
-        const result = createCategoryUseCase.execute(body)
+        const result = await createCategoryUseCase.execute(body)
         
         return res.status(201).json(result)
 

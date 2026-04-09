@@ -14,6 +14,9 @@ class CreateCategoryUseCase {
         ownerID: input.ownerID,
     });
 
+    var items = this.repository.find(category)
+    console.log(items)
+
     const response = await this.repository.save(category);
     return response;
   }
