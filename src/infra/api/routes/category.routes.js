@@ -2,14 +2,19 @@ const express = require("express");
 
 const router = express.Router();
 
-const Category = require("../../database/schemas/category.schema")
+const CategoryRepositoryMongo = require("../../database/repository/category.repository")
+const categoryRepositoryMongo = new CategoryRepositoryMongo()
+
+const CreateCategoryUseCase = require("../../../application/category/createCategory")
+
+const createCategoryUseCase = new CreateCategoryUseCase(categoryRepositoryMongo)
 
 router.post('/create', async (req,res) => {
     try {
         const body = req.body
+        const result = createCategoryUseCase.execute(body)
         
-
-        // criar a categoria
+        return res.status(201).json(result)
 
     } catch (error) {
         

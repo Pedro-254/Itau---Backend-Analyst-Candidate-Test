@@ -4,17 +4,29 @@ const router = express.Router();
 
 const Product = require("../../database/schemas/product.schema")
 
+const ProductRepositoryMongo = require("../../database/repository/product.repository")
 const CreateProductUseCase = require("../../../application/product/createProduct")
 const FindProductUseCase = require("../../../application/product/findProducts")
-const ProductRepositoryMongo = require("../../database/repository/product.repository")
+const ChangeProductCategory = require("../../../application/product/changeProductCategory")
 
 const productRepository = new ProductRepositoryMongo();
 const createProductUseCase = new CreateProductUseCase(productRepository);
 const findProductUseCase = new FindProductUseCase(productRepository);
+const changeProductCategory = new ChangeProductCategory(productRepository);
 
 
 // POST /products  
 router.post('/create', async (req, res) => {
+  try {
+    const result = await createProductUseCase.execute(req.body);
+    return res.status(201).json(result);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+});
+
+// POST /products  
+router.post('/update', async (req, res) => {
   try {
     const result = await createProductUseCase.execute(req.body);
     return res.status(201).json(result);

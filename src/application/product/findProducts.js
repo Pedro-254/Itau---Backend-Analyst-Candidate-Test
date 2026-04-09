@@ -1,4 +1,3 @@
-const Product = require("../../domain/product/entity/product")
 
 class FindProductUseCase{
     constructor(productRepository){
@@ -24,8 +23,11 @@ class FindProductUseCase{
                 throw new Error("limit must be >= 1");
             }
         }
+        const ownerID = input.ownerID
 
-        const ownerID = String(input.ownerID).trim() !== "" ? String(input.ownerID).trim() : undefined;
+        if(ownerID != undefined){
+            ownerID = String(input.ownerID).trim() !== "" ? String(input.ownerID).trim() : undefined;
+        }
 
         const criteria = {ownerID, page, limit}
 

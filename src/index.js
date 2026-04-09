@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
-const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/DesafioItau';
+const port = 3000;
+const mongoUri = 'mongodb://127.0.0.1:27017/DesafioItau';
 
 mongoose
   .connect(mongoUri)

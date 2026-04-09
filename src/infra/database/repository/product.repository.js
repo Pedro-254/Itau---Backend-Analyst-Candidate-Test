@@ -20,13 +20,34 @@ class ProductRepositoryMongo {
       };
     }
 
+    async update(productEntity){
+      if(!productEntity.id){
+        throw new Error("product id is required");    
+      }
+
+      const filter = {_id: productEntity.id}
+      
+      const updateData = {}
+
+      if(productEntity.category !== undefined){
+        updateData.category = productEntity.category
+      }
+
+      const doc = await ProductModel.findOneAndUpdate(
+        filter,
+        { $set: updateData}
+      ).lean()
+
+      return doc
+    }
+
     async findAll({ownerID, page = 1, limit = 10}){
       const safePage = page;
       const safeLimit = limit;
       const skip = (page - 1) * limit
 
       const query = {}
-      if(ownerID){
+      if(ownerID && ownerID != "" && ownerID != undefined){
         query.ownerID = ownerID
       }
 
