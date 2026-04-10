@@ -16,14 +16,13 @@ class CategoryRepositoryMongo {
       };
     }
 
-    async findByName(categoryEntity) {
+    async findByTitleandOwner(category) {
       const query = {}
 
-      query.ownerID = categoryEntity.ownerID
-      query.title = categoryEntity.title
+      query.ownerID = category.ownerID
+      query.title = category.title
 
-
-      const items = await CategoryModel.find();
+      const items = await CategoryModel.find(query).lean();
   
       return {
         data: items.map((doc) => ({

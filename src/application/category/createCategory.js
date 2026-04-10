@@ -14,11 +14,18 @@ class CreateCategoryUseCase {
         ownerID: input.ownerID,
     });
 
-    var items = this.repository.find(category)
-    console.log(items)
+    var items = await this.repository.findByTitleandOwner(category)
+    console.log(items.data.length)
 
-    const response = await this.repository.save(category);
-    return response;
+    if (items.data.length < 0) {
+      const response = await this.repository.save(category);
+      return response;
+    }else{
+      throw new Error("Category already exists");
+      
+    }
+
+    
   }
 }
 
