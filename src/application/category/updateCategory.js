@@ -1,9 +1,9 @@
 // use case
-const { Product } = require('../../domain/product/entity/product');
+const { Category } = require('../../domain/product/entity/category');
 
-class UpdateProductUseCase {
-  constructor(productRepository, categoryRepository) {
-    this.productRepository = productRepository;
+class UpdateCategoryUseCase {
+
+  constructor(categoryRepository) {
     this.categoryRepository = categoryRepository;
   }
 
@@ -33,4 +33,4 @@ class UpdateProductUseCase {
   }
 }
 
-module.exports = UpdateProductUseCase
+module.exports = UpdateCategoryUseCase

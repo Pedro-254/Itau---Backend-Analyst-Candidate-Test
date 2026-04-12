@@ -16,6 +16,21 @@ class CategoryRepositoryMongo {
       };
     }
 
+    async update(categoryEntity) {
+      const doc = await CategoryModel.create({
+        title: categoryEntity.title,
+        description: categoryEntity.description,
+        ownerID: categoryEntity.ownerID,
+      });
+  
+      return {
+        id: doc._id.toString(),
+        title: doc.title,
+        description: doc.description,
+        ownerID: doc.ownerID,
+      };
+    }
+
     async findByTitleandOwner(title,ownerID) {
       const query = {}
 
