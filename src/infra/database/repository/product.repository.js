@@ -21,21 +21,40 @@ class ProductRepositoryMongo {
     }
 
     async update(productEntity){
+
       if(!productEntity.id){
-        throw new Error("product id is required");    
+        throw new Error("Product id is required");    
       }
 
       const filter = {_id: productEntity.id}
       
       const updateData = {}
 
+      if(productEntity.title !== undefined){
+        updateData.title = productEntity.title
+      }
+
+      if(productEntity.description !== undefined){
+        updateData.description = productEntity.description
+      }
+
       if(productEntity.category !== undefined){
         updateData.category = productEntity.category
       }
 
+      if(Number(productEntity.price) < 0){
+        throw new Error("Price cannot be negative");
+        
+      }
+
+      if(productEntity.price !== undefined){
+        updateData.price = productEntity.price
+      }
+
       const doc = await ProductModel.findOneAndUpdate(
         filter,
-        { $set: updateData}
+        { $set: updateData},
+        { new: true }
       ).lean()
 
       return doc

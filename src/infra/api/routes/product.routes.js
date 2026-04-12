@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
+// Schemas
 const Product = require("../../database/schemas/product.schema")
 
+// Repositories
 const ProductRepositoryMongo = require("../../database/repository/product.repository")
 const productRepository = new ProductRepositoryMongo();
 
@@ -11,14 +13,16 @@ const CategoryRepositoryMongo = require("../../database/repository/category.repo
 const categoryRepository = new CategoryRepositoryMongo();
 
 
-
+// Use Cases
 const CreateProductUseCase = require("../../../application/product/createProduct")
-const FindProductUseCase = require("../../../application/product/findProducts")
-const ChangeProductCategory = require("../../../application/product/changeProductCategory")
-
 const createProductUseCase = new CreateProductUseCase(productRepository, categoryRepository);
+
+const FindProductUseCase = require("../../../application/product/findProducts")
 const findProductUseCase = new FindProductUseCase(productRepository);
-const changeProductCategory = new ChangeProductCategory(productRepository);
+
+const UpdateProductUseCase = require("../../../application/product/updateProduct")
+const updateProductUseCase = new UpdateProductUseCase(productRepository,categoryRepository);
+
 
 
 // POST /products  
@@ -32,9 +36,9 @@ router.post('/create', async (req, res) => {
 });
 
 // POST /products  
-router.post('/update', async (req, res) => {
+router.put('/update', async (req, res) => {
   try {
-    const result = await createProductUseCase.execute(req.body);
+    const result = await updateProductUseCase.execute(req.body);
     return res.status(201).json(result);
   } catch (err) {
     return res.status(400).json({ message: err.message });
