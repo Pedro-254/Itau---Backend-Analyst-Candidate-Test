@@ -2,22 +2,33 @@
 const { Product } = require('../../domain/product/entity/product');
 
 class CreateProductUseCase {
-  constructor(productRepository) {
+  constructor(productRepository, categoryRepository) {
     this.productRepository = productRepository;
+    this.categoryRepository = categoryRepository;
   }
 
   async execute(input) {
-    const product = new Product({
-      id: undefined,
-      title: input.title,
-      description: input.description,
-      price: input.price,
-      category: input.category,
-      ownerID: input.ownerID,
-    });
+    var items = await this.categoryRepository.findByTitleandOwner(input.category, input.ownerID)
+    if (items.data.length > 0) {
 
-    const response = await this.productRepository.save(product);
-    return response;
+      const product = new Product({
+        id: undefined,
+        title: input.title,
+        description: input.description,
+        price: input.price,
+        category: input.category,
+        ownerID: input.ownerID,
+      });
+  
+      const response = await this.productRepository.save(product);
+      return response;
+
+    }else{
+      throw new Error(`Category (${input.category}) doesn't exist`);
+      
+    }
+
+    
   }
 }
 

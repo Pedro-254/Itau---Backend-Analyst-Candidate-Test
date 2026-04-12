@@ -5,12 +5,18 @@ const router = express.Router();
 const Product = require("../../database/schemas/product.schema")
 
 const ProductRepositoryMongo = require("../../database/repository/product.repository")
+const productRepository = new ProductRepositoryMongo();
+
+const CategoryRepositoryMongo = require("../../database/repository/category.repository")
+const categoryRepository = new CategoryRepositoryMongo();
+
+
+
 const CreateProductUseCase = require("../../../application/product/createProduct")
 const FindProductUseCase = require("../../../application/product/findProducts")
 const ChangeProductCategory = require("../../../application/product/changeProductCategory")
 
-const productRepository = new ProductRepositoryMongo();
-const createProductUseCase = new CreateProductUseCase(productRepository);
+const createProductUseCase = new CreateProductUseCase(productRepository, categoryRepository);
 const findProductUseCase = new FindProductUseCase(productRepository);
 const changeProductCategory = new ChangeProductCategory(productRepository);
 

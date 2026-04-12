@@ -16,11 +16,11 @@ class CategoryRepositoryMongo {
       };
     }
 
-    async findByTitleandOwner(category) {
+    async findByTitleandOwner(title,ownerID) {
       const query = {}
 
-      query.ownerID = category.ownerID
-      query.title = category.title
+      query.ownerID = ownerID
+      query.title = title
 
       const items = await CategoryModel.find(query).lean();
   
