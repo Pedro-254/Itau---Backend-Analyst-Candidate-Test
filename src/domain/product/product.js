@@ -1,10 +1,10 @@
 class Product {
-    constructor({id, title, description, price, category, ownerID}) {
+    constructor({id, title, description, price, categoryID, ownerID}) {
         this._id = id;
         this._title = title;
         this._price = price;
         this._description = description;
-        this._category = category; //ID da categoria
+        this._categoryID = categoryID; //ID da categoria
         this._ownerID = ownerID;
     }
 
@@ -16,7 +16,7 @@ class Product {
 
     get price() { return this._price; }
 
-    get category() { return this._category; }
+    get categoryID() { return this._categoryID; }
 
     get ownerID() { return this._ownerID; }
 

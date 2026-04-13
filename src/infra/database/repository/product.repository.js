@@ -6,7 +6,7 @@ class ProductRepositoryMongo {
         title: productEntity.title,
         description: productEntity.description,
         price: productEntity.price,
-        category: productEntity.category,
+        categoryID: productEntity.categoryID,
         ownerID: productEntity.ownerID,
       });
   
@@ -15,7 +15,7 @@ class ProductRepositoryMongo {
         title: doc.title,
         description: doc.description,
         price: doc.price,
-        category: doc.category,
+        categoryID: doc.categoryID,
         ownerID: doc.ownerID,
       };
     }
@@ -38,8 +38,8 @@ class ProductRepositoryMongo {
         updateData.description = productEntity.description
       }
 
-      if(productEntity.category !== undefined){
-        updateData.category = productEntity.category
+      if(productEntity.categoryID !== undefined){
+        updateData.categoryID = productEntity.categoryID
       }
 
       if(Number(productEntity.price) < 0){
@@ -56,6 +56,11 @@ class ProductRepositoryMongo {
         { $set: updateData},
         { new: true }
       ).lean()
+
+      if(!doc){
+        throw new Error("Product doesnt exists");
+        
+      }
 
       return doc
     }

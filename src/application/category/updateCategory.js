@@ -1,5 +1,5 @@
 // use case
-const { Category } = require('../../domain/product/entity/category');
+const { Category } = require('../../domain/category/category');
 
 class UpdateCategoryUseCase {
 
@@ -10,23 +10,21 @@ class UpdateCategoryUseCase {
   async execute(input) {
     
     // find category
-    var categoryItems = await this.categoryRepository.findByTitleandOwner(input.category,input.ownerID)
+    var categoryItems = await this.categoryRepository.findById(input.id)
 
     if (categoryItems.data.length == 0) {
       throw new Error(`Category doesn't exist: ${input.category}`);
     }
 
-    const product = new Product({
+    const category = new Category({
       id: input.id,
       title: input.title,
       description: input.description,
-      price: input.price,
-      category: input.category,
       ownerID: input.ownerID,
     });
 
     // update product
-    const response = await this.productRepository.update(product);
+    const response = await this.categoryRepository.update(category);
 
     return response;
     

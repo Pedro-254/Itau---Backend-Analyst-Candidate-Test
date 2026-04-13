@@ -1,5 +1,5 @@
 // use case
-const { Category } = require('../../domain/product/entity/category');
+const { Category } = require('../../domain/category/category');
 
 class CreateCategoryUseCase {
   constructor(Repository) {
