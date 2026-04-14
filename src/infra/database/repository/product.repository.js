@@ -20,6 +20,12 @@ class ProductRepositoryMongo {
       };
     }
 
+    async delete(id) {
+      const response = await ProductModel.deleteOne({ _id: id});
+  
+      return response;
+    }
+
     async update(productEntity){
 
       if(!productEntity.id){
@@ -97,6 +103,24 @@ class ProductRepositoryMongo {
         },
       };
 
+    }
+
+    async findById(id) {
+      const item = await ProductModel.findById(id).lean();
+
+      return {
+        data: item
+        ? [{
+            id: item._id.toString(),
+            title: item.title,
+            description: item.description,
+            price: item.price,
+            category: item.category,
+            ownerID: item.ownerID,
+          }]
+        : []
+      };
+    
     }
   }
 

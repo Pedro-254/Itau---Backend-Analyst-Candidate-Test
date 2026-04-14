@@ -1,7 +1,4 @@
-// use case
-const { Category } = require('../../domain/category/category');
-
-class DeleteCategoryUseCase {
+class DeleteProductUseCase {
   constructor(Repository) {
     this.repository = Repository;
   }
@@ -12,10 +9,15 @@ class DeleteCategoryUseCase {
     if (item.data.length == 1) {
         const id = item.data[0].id
 
-        const response = await this.repository.delete(id);
+        const delete_result = await this.repository.delete(id);
+
+        const response = {
+          result : delete_result,
+          data : item.data
+        }
         return response;
     }else{
-      throw new Error("Category doesnt exist.");
+      throw new Error("Product doesnt exist.");
       
     }
 
@@ -23,4 +25,4 @@ class DeleteCategoryUseCase {
   }
 }
 
-module.exports = DeleteCategoryUseCase
+module.exports = DeleteProductUseCase

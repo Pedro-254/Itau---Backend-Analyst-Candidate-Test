@@ -23,9 +23,9 @@ const findProductUseCase = new FindProductUseCase(productRepository);
 const UpdateProductUseCase = require("../../../application/product/updateProduct")
 const updateProductUseCase = new UpdateProductUseCase(productRepository,categoryRepository);
 
+const DeleteProductUseCase = require("../../../application/product/deleteProduct")
+const deleteProductUseCase = new DeleteProductUseCase(productRepository);
 
-
-// POST /products  
 router.post('/create', async (req, res) => {
   try {
     const result = await createProductUseCase.execute(req.body);
@@ -35,7 +35,6 @@ router.post('/create', async (req, res) => {
   }
 });
 
-// POST /products  
 router.put('/update', async (req, res) => {
   try {
     const result = await updateProductUseCase.execute(req.body);
@@ -45,7 +44,6 @@ router.put('/update', async (req, res) => {
   }
 });
 
-// GET /products  
 router.get('/', async (req, res) => {
   try{
     const result = await findProductUseCase.execute(req.query)
@@ -55,5 +53,17 @@ router.get('/', async (req, res) => {
     console.log(err)
   }
 });
+
+router.delete('/delete', async (req,res) => {
+  try {
+      const body = req.body
+      const result = await deleteProductUseCase.execute(body)
+      
+      return res.status(201).json(result)
+
+  } catch (error) {
+      return res.status(400).json({ message: error.message })
+  }
+})
 
 module.exports = router;
